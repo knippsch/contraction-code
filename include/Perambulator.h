@@ -21,7 +21,6 @@
 #include "GlobalData.h"
 #include "io_utils.h"
 #include "propagator_io.h"
-#include "quark.h"
 #include "RandomVector.h"
 #include "typedefs.h"
 

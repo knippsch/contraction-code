@@ -1,9 +1,9 @@
 #ifndef BASICOPERATOR_H_
 #define BASICOPERATOR_H_
 
+#include "typedefs.h"
 #include "GlobalData.h"
 #include "Perambulator.h"
-#include "typedefs.h"
 #include "VdaggerV.h"
 
 // struct for Look-up table in create_gamma and get_operator. To read as

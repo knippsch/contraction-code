@@ -20,7 +20,7 @@ all: rmxeq mkdep mkxeq
 
 MAIN = LapHs
 
-GENERAL = GlobalData BasicOperator Perambulator io_utils config_utils RandomVector \
+GENERAL = GlobalData BasicOperator Perambulator config_utils RandomVector \
           ranlxs EigenVector VdaggerV Correlators Correlators_small_traces \
           Correlators_big_traces CrossOperator IoHelpers CorrelatorIo2pt 
 
@@ -33,23 +33,24 @@ VPATH = .:$(MDIR)
 # Logging option (-mpilog or -mpitrace or -mpianim)
 LOGOPTION =
 
-LIMEPATH = /hiskp2/jost/code/lime #/hiskp2/werner/libraries/lime-1.3.2
+LIMEPATH = /home/knippsch/ExternLibraries/lime
 
 # additional include directories
-INCPATH = /hiskp2/werner/libraries/eigen-eigen-1306d75b4a21 \
-          /hiskp2/werner/libraries/boost_1_55_0 \
+INCPATH = /home/knippsch/ExternLibraries/eigen-3.2.1 \
+          /home/knippsch/ExternLibraries/boost_1_55_0 \
           $(LIMEPATH)/include/ ../include 
 
 # additional libraries
 
-LIBS = boost_program_options lime 
+LIBS = lime boost_program_options
 
-LIBPATH = /usr/local/lib /hiskp2/werner/libraries/boost_1_55_0/stage/lib/ $(LIMEPATH)/lib 
+LIBPATH = $(LIMEPATH)/lib  /usr/local/lib /home/knippsch/ExternLibraries/boost_1_55_0/stage/lib/
 
 
 # scheduling and optimization options
-CFLAGS = -Wall -pedantic -std=c++0x -fopenmp -O2 -march=native -Wno-unused-variable \
-         -Wno-unused-local-typedefs -Wno-sign-compare 
+CFLAGS = -Wall -pedantic -std=c++11 -O3 -march=native -malign-double \
+         -Wno-unused-variable -Wno-unused-local-typedefs -Wno-sign-compare -fopenmp  
+
 ############################## do not change ###################################
 
 SHELL=/bin/bash
@@ -70,14 +71,14 @@ $(addsuffix .d,$(PGMS)): %.d: %.cpp Makefile
 # rule to compile source programs
 
 $(addsuffix .o,$(PGMS)): %.o: %.cpp Makefile
-	$(CC) $< -c $(CFLAGS) $(LOGOPTION) $(addprefix -I,$(INCPATH)) -static
+	$(CC) $< -c $(CFLAGS) $(LOGOPTION) $(addprefix -I,$(INCPATH))
 
 
 # rule to link object files
 
 $(MAIN): %: %.o $(addsuffix .o,$(MODULES)) Makefile
 	$(CLINKER) $< $(addsuffix .o,$(MODULES)) $(CFLAGS) $(LOGOPTION) \
-	   $(addprefix -L,$(LIBPATH)) $(addprefix -l,$(LIBS)) -lm -o $@ -static
+	   $(addprefix -L,$(LIBPATH)) $(addprefix -l,$(LIBS)) -lm -o $@ 
 
 # produce executables
 

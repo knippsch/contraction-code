@@ -12,7 +12,7 @@ static GlobalData * const global_data = GlobalData::Instance();
 //Tag handling/////////////////////////////////////////////////////////////////
 
 // Calculate p^2
- int square_comp(const std::array<int, 3>& p1,
+int square_comp(const std::array<int, 3>& p1,
                        const std::array<int, 3>& p2){
   int square = 0;
   for (size_t i = 0; i < 3; ++i){
@@ -22,7 +22,7 @@ static GlobalData * const global_data = GlobalData::Instance();
 }
 
 // Compare two tags of correlation functions
- bool compare_tags(const Tag& tag1, const Tag& tag2){
+bool compare_tags(const Tag& tag1, const Tag& tag2){
   bool flag = true;
   if (memcmp(tag1.mom, tag2.mom, sizeof(tag1.mom)) != 0) flag = false;
   if (memcmp(tag1.dis, tag2.dis, sizeof(tag1.dis)) != 0) flag = false;
